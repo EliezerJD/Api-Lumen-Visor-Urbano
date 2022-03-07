@@ -16,3 +16,17 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+
+
+$router->group(["prefix" => "/v1"], function () use ($router) {
+    $router->group(["prefix" => "/user"], function () use ($router) {
+        $router->post('/register', 'UserController@store');
+        $router->get('/get', 'UserController@getAll');
+        $router->get('/get/{id}', 'UserController@getUserById');
+        $router->put('/update/{id}', 'UserController@update');
+        $router->delete('/delete/{id}', 'UserController@delete');
+        $router->get('/getDeleted', 'UserController@getAllUsersDeleted');
+        $router->get('/restore/{id}', 'UserController@restore');
+    });
+});

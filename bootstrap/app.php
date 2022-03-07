@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__.'/../vendor/autoload.php';
+use Carbon\Carbon;
 
 (new Laravel\Lumen\Bootstrap\LoadEnvironmentVariables(
     dirname(__DIR__)
@@ -23,9 +24,15 @@ $app = new Laravel\Lumen\Application(
     dirname(__DIR__)
 );
 
-// $app->withFacades();
+$app = new \Dusterio\LumenPassport\Lumen7Application(
+    dirname(__DIR__)
+);
 
-// $app->withEloquent();
+$app->configure('auth');
+
+$app->withFacades();
+
+$app->withEloquent();
 
 /*
 |--------------------------------------------------------------------------
@@ -76,9 +83,9 @@ $app->configure('app');
 //     App\Http\Middleware\ExampleMiddleware::class
 // ]);
 
-// $app->routeMiddleware([
-//     'auth' => App\Http\Middleware\Authenticate::class,
-// ]);
+$app->routeMiddleware([
+    'auth' => App\Http\Middleware\Authenticate::class,
+]);
 
 /*
 |--------------------------------------------------------------------------
@@ -92,6 +99,12 @@ $app->configure('app');
 */
 
 $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
+$app->register(Laravel\Passport\PassportServiceProvider::class);
+$app->register(Dusterio\LumenPassport\PassportServiceProvider::class);
+
+\Dusterio\LumenPassport\LumenPassport::routes($app);
+
+\Dusterio\LumenPassport\LumenPassport::tokensExpireIn(Carbon::now()->addHour(1)); 
 
 // $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
