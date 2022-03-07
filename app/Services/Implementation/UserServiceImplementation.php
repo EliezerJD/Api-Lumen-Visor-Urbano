@@ -17,7 +17,7 @@ class UserServiceImplementation implements UserServiceInterface
 		$this->model = new User();
 	}
 
-	function getAllUsers()
+	function getAll()
 	{
 		return $this->model->get();
 	}

@@ -29,4 +29,17 @@ $router->group(["prefix" => "/v1", 'middleware' => 'auth'], function () use ($ro
         $router->get('/getDeleted', 'UserController@getAllUsersDeleted');
         $router->get('/restore/{id}', 'UserController@restore'); 
     });
+
+     $router->group(["prefix" => "/product", 'middleware' => 'admin'], function () use ($router) {
+        $router->post('/register', 'ProductController@store');
+        $router->put('/update/{id}', 'ProductController@update');
+        $router->delete('/delete/{id}', 'ProductController@delete');
+        $router->get('/getDeleted', 'ProductController@getAllProductsDeleted');
+        $router->get('/restore/{id}', 'ProductController@restore'); 
+    });
+
+    $router->group(["prefix" => "/product"], function () use ($router) {
+        $router->get('/get', 'ProductController@getAll');
+        $router->get('/get/{id}', 'ProductController@getProductById');
+    });
 });

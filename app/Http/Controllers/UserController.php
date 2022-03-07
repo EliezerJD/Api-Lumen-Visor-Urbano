@@ -48,7 +48,7 @@ class UserController extends Controller
 
     function getAll()
     {
-        return response($this->userService->getAllUsers());
+        return response($this->userService->getAll());
     }
 
     function getUserById(int $id)
@@ -100,6 +100,6 @@ class UserController extends Controller
     public function login(Request $request)
     {
         return response($this->userService->login($this->request->all()));
-   }
+    }
 
 }

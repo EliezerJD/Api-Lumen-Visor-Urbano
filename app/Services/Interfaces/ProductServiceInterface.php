@@ -2,11 +2,11 @@
 
 namespace App\Services\Interfaces;
 
-interface UserServiceInterface
+interface ProductServiceInterface
 {
 	function getAll();
 
-	function getUserById(int $id);
+	function getProductById(int $id);
 
 	function store(array $user);
 
@@ -14,7 +14,7 @@ interface UserServiceInterface
 	
 	function delete(int $id);
 
-	function getAllUsersDeleted();
+	function getAllProductsDeleted();
 
 	function restore(int $id);
 
