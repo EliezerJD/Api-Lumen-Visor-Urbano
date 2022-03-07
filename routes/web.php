@@ -17,17 +17,16 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+$router->post('/login', 'UserController@login');
 
-
-$router->group(["prefix" => "/v1"], function () use ($router) {
-    $router->post('/login', 'UserController@login');
-    $router->group(["prefix" => "/user"], function () use ($router) {
-        $router->post('/register', 'UserController@store');
+$router->group(["prefix" => "/v1", 'middleware' => 'auth'], function () use ($router) {
+    $router->group(["prefix" => "/user", 'middleware' => 'admin'], function () use ($router) {
         $router->get('/get', 'UserController@getAll');
         $router->get('/get/{id}', 'UserController@getUserById');
+        $router->post('/register', 'UserController@store');
         $router->put('/update/{id}', 'UserController@update');
         $router->delete('/delete/{id}', 'UserController@delete');
         $router->get('/getDeleted', 'UserController@getAllUsersDeleted');
-        $router->get('/restore/{id}', 'UserController@restore');
+        $router->get('/restore/{id}', 'UserController@restore'); 
     });
 });

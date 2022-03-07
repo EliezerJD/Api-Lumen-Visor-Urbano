@@ -4,7 +4,6 @@ namespace App\Services\Implementation;
 
 use App\Services\Interfaces\UserServiceInterface;
 use App\Models\User;
-use App\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -31,7 +30,7 @@ class UserServiceImplementation implements UserServiceInterface
 	function store(array $user)
 	{
 		$user['password'] = Hash::make($user['password']);
-		$this->model->store($user);
+		$this->model->create($user);
 	}
 
 	function update(array $user, int $id)
@@ -74,7 +73,8 @@ class UserServiceImplementation implements UserServiceInterface
 			if(Hash::check($data['password'], $user->password))
 			{
 	          $apiToken = base64_encode(Str::random(40));
-	          $user['api_token'] = $apiToken;
+	          $this->model->where('email', $data['email'])->update(['apiToken' => "$apiToken"]);
+	          $user['apitoken'] = $apiToken;
 	          return $user;
 		    }
 		    else
