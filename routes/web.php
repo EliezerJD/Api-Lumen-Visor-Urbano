@@ -18,13 +18,13 @@ $router->get('/', function () use ($router) {
 });
 
 $router->post('/login', 'UserController@login');
-$router->get('/v1/product/get', 'ProductController@getAll');
-$router->get('/v1/product/get/{id}', 'ProductController@getProductById');
+$router->get('/api/productos', 'ProductController@getAll');
+$router->get('/api/productos/{id}', 'ProductController@getProductById');
 
-$router->group(["prefix" => "/v1", 'middleware' => 'auth'], function () use ($router) {
-    $router->group(["prefix" => "/user", 'middleware' => 'admin'], function () use ($router) {
-        $router->get('/get', 'UserController@getAll');
-        $router->get('/get/{id}', 'UserController@getUserById');
+$router->group(["prefix" => "/api", 'middleware' => 'auth'], function () use ($router) {
+    $router->group(["prefix" => "/usuarios", 'middleware' => 'admin'], function () use ($router) {
+        $router->get('/', 'UserController@getAll');
+        $router->get('/{id}', 'UserController@getUserById');
         $router->post('/register', 'UserController@store');
         $router->put('/update/{id}', 'UserController@update');
         $router->delete('/delete/{id}', 'UserController@delete');
@@ -32,7 +32,7 @@ $router->group(["prefix" => "/v1", 'middleware' => 'auth'], function () use ($ro
         $router->get('/restore/{id}', 'UserController@restore'); 
     });
 
-     $router->group(["prefix" => "/product", 'middleware' => 'admin'], function () use ($router) {
+     $router->group(["prefix" => "/productos", 'middleware' => 'admin'], function () use ($router) {
         $router->post('/register', 'ProductController@store');
         $router->put('/update/{id}', 'ProductController@update');
         $router->delete('/delete/{id}', 'ProductController@delete');
