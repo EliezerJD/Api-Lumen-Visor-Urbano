@@ -29,6 +29,8 @@ $app->withFacades();
 
 $app->withEloquent();
 
+
+
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
@@ -63,6 +65,8 @@ $app->singleton(
 
 $app->configure('app');
 
+$app->register('Nord\Lumen\Cors\CorsServiceProvider');
+
 /*
 |--------------------------------------------------------------------------
 | Register Middleware
@@ -77,6 +81,10 @@ $app->configure('app');
 // $app->middleware([
 //     App\Http\Middleware\ExampleMiddleware::class
 // ]);
+
+$app->middleware([
+    'Nord\Lumen\Cors\CorsMiddleware'
+]);
 
 $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,

@@ -18,6 +18,8 @@ $router->get('/', function () use ($router) {
 });
 
 $router->post('/login', 'UserController@login');
+$router->get('/v1/product/get', 'ProductController@getAll');
+$router->get('/v1/product/get/{id}', 'ProductController@getProductById');
 
 $router->group(["prefix" => "/v1", 'middleware' => 'auth'], function () use ($router) {
     $router->group(["prefix" => "/user", 'middleware' => 'admin'], function () use ($router) {
@@ -36,10 +38,5 @@ $router->group(["prefix" => "/v1", 'middleware' => 'auth'], function () use ($ro
         $router->delete('/delete/{id}', 'ProductController@delete');
         $router->get('/getDeleted', 'ProductController@getAllProductsDeleted');
         $router->get('/restore/{id}', 'ProductController@restore'); 
-    });
-
-    $router->group(["prefix" => "/product"], function () use ($router) {
-        $router->get('/get', 'ProductController@getAll');
-        $router->get('/get/{id}', 'ProductController@getProductById');
     });
 });
