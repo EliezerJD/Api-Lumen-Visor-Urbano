@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\Implementation\UserServiceImplementation;
 use App\Validator\UserValidator;
+use App\Model\User;
 
 class UserController extends Controller
 {
@@ -95,5 +96,10 @@ class UserController extends Controller
 
         return response("", 204);
     }
+
+    public function login(Request $request)
+    {
+        return response($this->userService->login($this->request->all()));
+   }
 
 }

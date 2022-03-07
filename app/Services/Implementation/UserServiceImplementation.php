@@ -4,7 +4,9 @@ namespace App\Services\Implementation;
 
 use App\Services\Interfaces\UserServiceInterface;
 use App\Models\User;
+use App\Models\Role;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UserServiceImplementation implements UserServiceInterface
 {
@@ -59,6 +61,29 @@ class UserServiceImplementation implements UserServiceInterface
 		if($user != null)
 		{
 			$user->restore();
+		}
+	}
+
+	function login(array $data)
+	{
+		
+		$user = $this->model->where('email', $data['email'])->first();
+
+		if($user != null)
+		{
+			if(Hash::check($data['password'], $user->password))
+			{
+	          $apiToken = base64_encode(Str::random(40));
+	          $user['api_token'] = $apiToken;
+	          return $user;
+		    }
+		    else
+		    {
+	        	return response([
+	                "status" => 422,
+	                "message" => "Unauthorized"
+	            ]);
+		    }
 		}
 	}
 
