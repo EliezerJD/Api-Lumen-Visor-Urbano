@@ -12,6 +12,8 @@
 - copy .env.example .env
 - php artisan key:generate
 - php artisan migrate --seed
+- Execute 'php -S localhost:8000 -t public' to run the server.
+- Enjoy
 
 # Database
 - Mysql
