@@ -74,15 +74,15 @@ class UserServiceImplementation implements UserServiceInterface
 			{
 	          $apiToken = base64_encode(Str::random(40));
 	          $this->model->where('email', $data['email'])->update(['apiToken' => "$apiToken"]);
-	          $user['apitoken'] = $apiToken;
+	          $user['apiToken'] = $apiToken;
 	          return $user;
 		    }
 		    else
 		    {
-	        	return response([
+	        	return [
 	                "status" => 422,
 	                "message" => "Unauthorized"
-	            ]);
+	            ];
 		    }
 		}
 	}

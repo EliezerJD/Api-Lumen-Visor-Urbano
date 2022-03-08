@@ -17,10 +17,6 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->post('/login', 'UserController@login');
-$router->get('/api/productos', 'ProductController@getAll');
-$router->get('/api/productos/{id}', 'ProductController@getProductById');
-
 $router->group(["prefix" => "/api", 'middleware' => 'auth'], function () use ($router) {
     $router->group(["prefix" => "/usuarios", 'middleware' => 'admin'], function () use ($router) {
         $router->get('/', 'UserController@getAll');
@@ -28,15 +24,20 @@ $router->group(["prefix" => "/api", 'middleware' => 'auth'], function () use ($r
         $router->post('/register', 'UserController@store');
         $router->put('/update/{id}', 'UserController@update');
         $router->delete('/delete/{id}', 'UserController@delete');
-        $router->get('/getDeleted', 'UserController@getAllUsersDeleted');
+        //$router->get('/getDeleted', 'UserController@getAllUsersDeleted');
         $router->get('/restore/{id}', 'UserController@restore'); 
     });
 
      $router->group(["prefix" => "/productos", 'middleware' => 'admin'], function () use ($router) {
         $router->post('/register', 'ProductController@store');
         $router->put('/update/{id}', 'ProductController@update');
-        $router->delete('/delete/{id}', 'ProductController@delete');
         $router->get('/getDeleted', 'ProductController@getAllProductsDeleted');
         $router->get('/restore/{id}', 'ProductController@restore'); 
+        $router->delete('/delete/{id}', 'ProductController@delete');
+        
     });
 });
+
+$router->post('/api/login', 'UserController@login');
+$router->get('/api/productos', 'ProductController@getAll');
+$router->get('/api/productos/{id}', 'ProductController@getProductById');

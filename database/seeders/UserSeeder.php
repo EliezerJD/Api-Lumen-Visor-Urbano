@@ -19,14 +19,14 @@ class UserSeeder extends Seeder
         $user = new User();
         $user->name = 'Admin';
         $user->email = 'admin@admin.com';
-        $user->password = 'admin1234';
+        $user->password = '$2y$10$RPYiTuxjhQZMvjYSn4zaJOzATHOkWE75UJoUdSpoXh8S8KZeH8HSi';
         $user->role_id  = 1;
         $user->save();
 
         $user = new User();
         $user->name = 'User';
         $user->email = 'user@user.com';
-        $user->password = 'user1234';
+        $user->password = '$2y$10$h7oN/bri9OCEDs.ACzS82O18evx9d5qSHiPZnPsEFWrMViRZsm/ru';
         $user->role_id  = 2;
         $user->save();
         
