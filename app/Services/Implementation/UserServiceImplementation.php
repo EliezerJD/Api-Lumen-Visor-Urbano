@@ -35,7 +35,11 @@ class UserServiceImplementation implements UserServiceInterface
 
 	function update(array $user, int $id)
 	{
-		$user['password'] = Hash::make($user['password']);
+		if (array_key_exists('password', $user))
+		{
+			$user['password'] = Hash::make($user['password']);
+		}
+		
 		$this->model->where('id', $id)->first()->fill($user)->save();
 	}
 	
